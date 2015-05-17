@@ -15,12 +15,33 @@ class SeesawApp:
         self.graph_h = 120
 
     def draw_decision(self, decision):
+        # prepare data
         x = [goal.prob_a - goal.prob_b for goal in decision.goals]
         y = [goal.importance for goal in decision.goals]
-        p = plt.bar(x, y,width = 0.1)
-        p = plt.show()
 
-        canvas = FigureCanvasTkAgg(p.figure, master=root)
+        # create figure instance
+        p = plt.figure()
+
+        # remove axis
+        plt.gca().get_xaxis().set_visible(False)
+        plt.gca().get_yaxis().set_visible(False)
+
+        # plot bar chart
+        barlist = plt.bar(x, y,width = 0.2,align='center')
+        bar_col = ['b','g','r','c','m','y']
+        i=0
+        for cs in barlist:
+            cs.set_color(bar_col[i])
+            i=i+1
+
+        # plot vertical line
+        plt.vlines(0,0,1,lw=5)
+
+        # set axis
+        plt.axis([-2,2,0,1])
+
+        # pass figure to tk and render
+        canvas = FigureCanvasTkAgg(p, master=root)
         canvas.show()
         canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 
@@ -36,9 +57,6 @@ class Goal:
         self.importance = importance
         self.prob_a = probability_a
         self.prob_b = probability_b
-
-def quit():
-    root.quit()
 
 example_decision = Decision("Dialysis", "Not dialysis", [
     Goal("Live as long as possible", 0.6, 0.5, 0),
