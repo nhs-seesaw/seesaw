@@ -79,6 +79,7 @@ class SeesawApp:
         # change bar chart
         for i in range(len(self.barlist)):
             self.barlist[i].set_height(y[i])
+            self.barlist[i].set_x(x[i])
         
         self.canvas.draw()
 
