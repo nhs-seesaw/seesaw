@@ -17,11 +17,17 @@ class SeesawApp:
         self.number_of_groups = 5
         self.groups = []
 
+
+        l1 = Label(master, text="Goal").grid(row=0, column=0)
+        l2 = Label(master, text="Importance").grid(row=0, column=1)
+        l3 = Label(master, text="Probability A").grid(row=0, column=2)
+        l4 = Label(master, text="Probability B").grid(row=0, column=3)
+
         for group_number in range(0, self.number_of_groups):
             self.groups.append(GroupEntry(frame, group_number))
 
-        b = Button(frame, text="Draw", command=button_callback)
-        b.grid(row=self.number_of_groups, column=1)()
+        b = Button(frame, text="Draw", command=self.button_callback)
+        b.pack()
 
 
 
@@ -65,23 +71,25 @@ class Goal:
         self.prob_a = probability_a
         self.prob_b = probability_b
 
+
 class GroupEntry:
-	def __init__(self, master, group_number):
-		listbox = Listbox(master)
+    def __init__(self, master, group_number):
+        listbox = Listbox(master)
+        row_number = group_number + 1
 
-		label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number)
+        label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number)
 
-		self.e1 = Entry(master)
-		self.e1.grid(row=group_number, column=1)
+        self.e1 = Entry(master)
+        self.e1.grid(row=row_number, column=1)
 
-		self.importance_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
-		self.importance_slider.grid(row=group_number, column=2)
+        self.importance_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+        self.importance_slider.grid(row=row_number, column=2)
 
-		self.prob_a_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
-		self.prob_a_slider.grid(row=group_number, column=3)
+        self.prob_a_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+        self.prob_a_slider.grid(row=row_number, column=3)
 
-		self.prob_b_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
-		self.prob_b_slider.grid(row=group_number, column=4)
+        self.prob_b_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+        self.prob_b_slider.grid(row=row_number, column=4)
 
 
 example_decision = Decision("Dialysis", "Not dialysis", [
@@ -92,7 +100,7 @@ example_decision = Decision("Dialysis", "Not dialysis", [
 root = Tk()
 
 seesaw_app = SeesawApp(root)
-seesaw_app.draw_decision(example_decision)
+# seesaw_app.draw_decision(example_decision)
 
 root.mainloop()
         
