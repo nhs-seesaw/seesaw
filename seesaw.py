@@ -64,7 +64,7 @@ class GroupEntry:
 	def __init__(self, master, group_number):
 		listbox = Listbox(master)
 
-		label = Label(master, text="Group " + str(group_number+1)).grid(row=group_number)
+		label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number)
 
 		self.e1 = Entry(master)
 		self.e1.grid(row=group_number, column=1)
