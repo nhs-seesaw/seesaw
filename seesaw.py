@@ -128,7 +128,7 @@ class GroupEntry:
         self.prob_a_slider.grid(row=row_number, column=3)
 
 root = Tk()
-
+root.wm_title("Balance")
 seesaw_app = SeesawApp(root)
 
 root.mainloop()
