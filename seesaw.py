@@ -27,25 +27,24 @@ class SeesawApp:
         
         b = Button(self.frame, text="Draw", command=self.button_callback)
         b.grid(row=self.number_of_groups+1, columnspan=4)
-
+        
         p = plt.figure()
         
         # pass figure to tk and render
         canvas = FigureCanvasTkAgg(p, master=self.frame)
         canvas.show()
-        canvas.get_tk_widget().grid(row=number_of_groups+2, columnspan=4)
+        canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
 
     def button_callback(self):
         treatment_a_name = "Treatment A"
         treatment_b_name = "Treatment B"
 
         goal_list = []
-        for group_number in range(0, self.number_of_groups):
-            group_entry = self.groups[group_number]
-            name = group_entry.e1.get()
-            importance = group_entry.importance_slider.get()
-            probability_a = group_entry.prob_a_slider.get()
-            probability_b = group_entry.prob_b_slider.get()
+        for group in self.groups:
+            name = group.e1.get()
+            importance = group.importance_slider.get()
+            probability_a = group.prob_a_slider.get()
+            probability_b = group.prob_b_slider.get()
             goal_list.append(Goal(name, importance, probability_a, probability_b))
 
         decision = Decision(treatment_a_name, treatment_b_name, goal_list)
@@ -80,7 +79,7 @@ class SeesawApp:
         # pass figure to tk and render
         canvas = FigureCanvasTkAgg(p, master=self.frame)
         canvas.show()
-        canvas.get_tk_widget().grid(row=number_of_groups, columnspan=4)
+        canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
         
         goal_list = []
 
@@ -123,7 +122,6 @@ example_decision = Decision("Dialysis", "Not dialysis", [
 root = Tk()
 
 seesaw_app = SeesawApp(root)
-# seesaw_app.draw_decision(example_decision)
 
 root.mainloop()
         
