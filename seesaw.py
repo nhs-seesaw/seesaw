@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from Tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
@@ -15,7 +17,8 @@ class SeesawApp:
     def draw_decision(self, decision):
         x = [goal.prob_a - goal.prob_b for goal in decision.goals]
         y = [goal.importance for goal in decision.goals]
-        p, = plt.plot(x, y)
+        p = plt.bar(x, y,width = 0.1)
+        p = plt.show()
 
         canvas = FigureCanvasTkAgg(p.figure, master=root)
         canvas.show()
@@ -33,7 +36,10 @@ class Goal:
         self.importance = importance
         self.prob_a = probability_a
         self.prob_b = probability_b
-        
+
+def quit():
+    root.quit()
+
 example_decision = Decision("Dialysis", "Not dialysis", [
     Goal("Live as long as possible", 0.6, 0.5, 0),
     Goal("Feel well day-to-day", 0.9, 0.3, 0.4),
