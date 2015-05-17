@@ -14,19 +14,22 @@ class SeesawApp:
         self.graph_w = 200
         self.graph_h = 120
 
-        number_of_groups = 5
+        self.number_of_groups = 5
         groups = []
 
-        for group_number in range(0, number_of_groups):
+        for group_number in range(0, self.number_of_groups):
             groups.append(GroupEntry(frame, group_number))
 
+        b = Button(frame, text="Draw", command=button_callback)
+        b.grid(row=self.number_of_groups, column=1)()
 
+    def button_callback(self):
         treatment_a_name = "Treatment A"
         treatment_b_name = "Treatment B"
 
         goal_list = []
-        for group_number in range(0, number_of_groups):
-            group_entry = groups[group_number]
+        for group_number in range(0, self.number_of_groups):
+            group_entry = self.groups[group_number]
             name = group_entry.e1.get()
             importance = group_entry.importance_slider.get()
             probability_a = group_entry.prob_a_slider.get()
