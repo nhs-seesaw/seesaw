@@ -17,27 +17,34 @@ class SeesawApp:
         self.number_of_groups = 5
         self.groups = []
 
-        l1 = Label(self.frame, text="Goal").grid(row=0, column=1)
-        l2 = Label(self.frame, text="Importance").grid(row=0, column=2)
-        l3 = Label(self.frame, text="Probability A").grid(row=0, column=3)
-        l4 = Label(self.frame, text="Probability B").grid(row=0, column=4)
+        Label(self.frame, text="Treatment A").grid(row=0, column=0, columnspan=1)
+        self.treatment_a_entry = Entry(self.frame)
+        self.treatment_a_entry.grid(row=0, column=1, columnspan=3)
+        Label(self.frame, text="Treatment B").grid(row=1, column=0, columnspan=1)
+        self.treatment_b_entry = Entry(self.frame)
+        self.treatment_b_entry.grid(row=1, column=1, columnspan=3)
+
+        Label(self.frame, text="Goal").grid(row=2, column=1)
+        Label(self.frame, text="Importance").grid(row=2, column=2)
+        Label(self.frame, text="Probability A").grid(row=2, column=3)
+        Label(self.frame, text="Probability B").grid(row=2, column=4)
 
         for group_number in range(0, self.number_of_groups):
             self.groups.append(GroupEntry(self.frame, group_number))
         
         b = Button(self.frame, text="Draw", command=self.button_callback)
-        b.grid(row=self.number_of_groups+1, columnspan=4)
+        b.grid(row=self.number_of_groups+3, columnspan=4)
         
         p = plt.figure()
         
         # pass figure to tk and render
         canvas = FigureCanvasTkAgg(p, master=self.frame)
         canvas.show()
-        canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
+        canvas.get_tk_widget().grid(row=self.number_of_groups+4, columnspan=4)
 
     def button_callback(self):
-        treatment_a_name = "Treatment A"
-        treatment_b_name = "Treatment B"
+        treatment_a_name = self.treatment_a_entry.get()
+        treatment_b_name = self.treatment_b_entry.get()
 
         goal_list = []
         for group in self.groups:
@@ -90,7 +97,7 @@ class SeesawApp:
         # pass figure to tk and render
         canvas = FigureCanvasTkAgg(p, master=self.frame)
         canvas.show()
-        canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
+        canvas.get_tk_widget().grid(row=self.number_of_groups+4, columnspan=4)
         
         goal_list = []
 
@@ -109,7 +116,7 @@ class Goal:
 
 class GroupEntry:
     def __init__(self, master, group_number):
-        row_number = group_number + 1
+        row_number = group_number + 3
 
         label = Label(master, text="Goal " + str(group_number+1)).grid(row=row_number, column=0)
 
