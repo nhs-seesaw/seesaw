@@ -30,17 +30,35 @@ class SeesawApp:
             v = Scale(self.frame, from_=0, to=100, orient=HORIZONTAL, show=0)
             v.grid(row=group_number, column=3)
         
-        # x = [goal.prob_a - goal.prob_b for goal in decision.goals]
-        # y = [goal.importance for goal in decision.goals]
-        # p = plt.bar(x, y,width = 0.1)
-        # p = plt.show()
+        x = [goal.prob_a - goal.prob_b for goal in decision.goals]
+        y = [goal.importance for goal in decision.goals]
 
-        f = plt.figure()
+        # create figure instance
+        p = plt.figure()
+        
+        # remove axis
+        plt.gca().get_xaxis().set_visible(False)
+        plt.gca().get_yaxis().set_visible(False)
 
-        canvas = FigureCanvasTkAgg(f, master=self.frame)
+        # plot bar chart
+        barlist = plt.bar(x, y,width = 0.2,align='center')
+        bar_col = ['b','g','r','c','m','y']
+        i=0
+        for cs in barlist:
+            cs.set_color(bar_col[i])
+            i=i+1
+
+        # plot vertical line
+        plt.vlines(0,0,1,lw=5)
+
+        # set axis
+        plt.axis([-2,2,0,1])
+
+        # pass figure to tk and render
+        canvas = FigureCanvasTkAgg(p, master=self.frame)
         canvas.show()
         canvas.get_tk_widget().grid(row=number_of_groups, columnspan=4)
-
+        
         goal_list = []
 
 class Decision:
