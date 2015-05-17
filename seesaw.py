@@ -59,7 +59,7 @@ class SeesawApp:
             i=i+1
 
         # add bar names
-        self.label_locs, self.labels = plt.xticks([0] * self.number_of_groups, ["Hello"] * self.number_of_groups)
+        self.label_locs, self.labels = plt.xticks([0] * self.number_of_groups, [""] * self.number_of_groups)
 
         # display treatment titles
         self.title_a = plt.figtext(0.25,0.95,"Treatment A",horizontalalignment='center')
