@@ -21,8 +21,20 @@ class SeesawApp:
             groups.append(GroupEntry(frame, group_number))
 
 
-        goal_list = []
+        treatment_a_name = "Treatment A"
+        treatment_b_name = "Treatment B"
 
+        goal_list = []
+        for group_number in range(0, number_of_groups):
+            group_entry = groups[group_number]
+            name = group_entry.e1.get()
+            importance = group_entry.importance_slider.get()
+            probability_a = group_entry.prob_a_slider.get()
+            probability_b = group_entry.prob_b_slider.get()
+            goal_list.append(Goal(name, importance, probability_a, probability_b))
+
+        decision = Decision(treatment_a_name, treatment_b_name, goal_list)
+        self.draw_decision(decision)
 
 
     def draw_decision(self, decision):
@@ -54,14 +66,17 @@ class GroupEntry:
 
 		label = Label(master, text="Group " + str(group_number+1)).grid(row=group_number)
 
-		e1 = Entry(master)
-		e1.grid(row=group_number, column=1)
+		self.e1 = Entry(master)
+		self.e1.grid(row=group_number, column=1)
 
-		w = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
-		w.grid(row=group_number, column=2)
+		self.importance_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+		self.importance_slider.grid(row=group_number, column=2)
 
-		v = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
-		v.grid(row=group_number, column=3)
+		self.prob_a_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+		self.prob_a_slider.grid(row=group_number, column=3)
+
+		self.prob_b_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+		self.prob_b_slider.grid(row=group_number, column=4)
 
 
 example_decision = Decision("Dialysis", "Not dialysis", [
