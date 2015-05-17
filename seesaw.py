@@ -15,13 +15,15 @@ class SeesawApp:
         self.graph_h = 120
 
         self.number_of_groups = 5
-        groups = []
+        self.groups = []
 
         for group_number in range(0, self.number_of_groups):
-            groups.append(GroupEntry(frame, group_number))
+            self.groups.append(GroupEntry(frame, group_number))
 
         b = Button(frame, text="Draw", command=button_callback)
         b.grid(row=self.number_of_groups, column=1)()
+
+
 
     def button_callback(self):
         treatment_a_name = "Treatment A"
