@@ -10,11 +10,8 @@ class SeesawApp:
     def __init__(self, master):
         self.frame = Frame(master)
         self.frame.pack()
-
-        self.graph_w = 200
-        self.graph_h = 120
-
         self.number_of_groups = 5
+        self.bar_width = 0.2
         self.groups = []
 
         Label(self.frame, text="Treatment A").grid(row=0, column=0, columnspan=1)
@@ -50,7 +47,7 @@ class SeesawApp:
         # add bars
         self.barlist = plt.bar([0]*self.number_of_groups,
                                [0]*self.number_of_groups,
-                               width = 0.2,
+                               width = self.bar_width,
                                align='center')
         bar_col = ['b','g','r','c','m','y']
         i=0
@@ -93,13 +90,13 @@ class SeesawApp:
 
         self.title_a.set_text(decision.treatment_a)
         self.title_b.set_text(decision.treatment_b)
+        self.ax.set_xticks(x)
+        self.ax.set_xticklabels(new_labels)
 
         # change bar chart
         for i in range(len(self.barlist)):
             self.barlist[i].set_height(y[i])
-            self.barlist[i].set_x(x[i])
-            self.ax.set_xticks(x)
-            self.ax.set_xticklabels(new_labels)
+            self.barlist[i].set_x(x[i] - (self.bar_width / 2))
         
         self.canvas.draw()
 
