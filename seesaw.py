@@ -100,7 +100,7 @@ class GroupEntry:
     def __init__(self, master, group_number):
         row_number = group_number + 1
 
-        label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number, column=0)
+        label = Label(master, text="Goal " + str(group_number+1)).grid(row=row_number, column=0)
 
         self.e1 = Entry(master)
         self.e1.grid(row=row_number, column=1)
