@@ -18,9 +18,11 @@ class SeesawApp:
         self.groups = []
 
         Label(self.frame, text="Treatment A").grid(row=0, column=0, columnspan=1)
-        self.treatment_a_entry = Entry(self.frame).grid(row=0, column=1, columnspan=3)
+        self.treatment_a_entry = Entry(self.frame)
+        self.treatment_a_entry.grid(row=0, column=1, columnspan=3)
         Label(self.frame, text="Treatment B").grid(row=1, column=0, columnspan=1)
-        self.treatment_b_entry = Entry(self.frame).grid(row=1, column=1, columnspan=3)
+        self.treatment_b_entry = Entry(self.frame)
+        self.treatment_b_entry.grid(row=1, column=1, columnspan=3)
 
         Label(self.frame, text="Goal").grid(row=2, column=1)
         Label(self.frame, text="Importance").grid(row=2, column=2)
