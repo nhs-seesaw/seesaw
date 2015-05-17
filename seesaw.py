@@ -17,10 +17,10 @@ class SeesawApp:
         self.number_of_groups = 5
         self.groups = []
 
-        l1 = Label(self.frame, text="Goal").grid(row=0, column=0)
-        l2 = Label(self.frame, text="Importance").grid(row=0, column=1)
-        l3 = Label(self.frame, text="Probability A").grid(row=0, column=2)
-        l4 = Label(self.frame, text="Probability B").grid(row=0, column=3)
+        l1 = Label(self.frame, text="Goal").grid(row=0, column=1)
+        l2 = Label(self.frame, text="Importance").grid(row=0, column=2)
+        l3 = Label(self.frame, text="Probability A").grid(row=0, column=3)
+        l4 = Label(self.frame, text="Probability B").grid(row=0, column=4)
 
         for group_number in range(0, self.number_of_groups):
             self.groups.append(GroupEntry(self.frame, group_number))
@@ -100,7 +100,7 @@ class GroupEntry:
     def __init__(self, master, group_number):
         row_number = group_number + 1
 
-        label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number, column=1)
+        label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number, column=0)
 
         self.e1 = Entry(master)
         self.e1.grid(row=row_number, column=1)
