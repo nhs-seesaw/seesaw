@@ -100,18 +100,18 @@ class GroupEntry:
     def __init__(self, master, group_number):
         row_number = group_number + 1
 
-        label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number)
+        label = Label(master, text="Goal " + str(group_number+1)).grid(row=group_number, column=1)
 
         self.e1 = Entry(master)
         self.e1.grid(row=row_number, column=1)
 
-        self.importance_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+        self.importance_slider = Scale(master, from_=0, to=1, orient=HORIZONTAL, show=0, resolution=0.1)
         self.importance_slider.grid(row=row_number, column=2)
 
-        self.prob_a_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+        self.prob_a_slider = Scale(master, from_=-1, to=1, orient=HORIZONTAL, show=0, resolution=0.1)
         self.prob_a_slider.grid(row=row_number, column=3)
 
-        self.prob_b_slider = Scale(master, from_=0, to=100, orient=HORIZONTAL, show=0)
+        self.prob_b_slider = Scale(master, from_=-1, to=1, orient=HORIZONTAL, show=0, resolution=0.1)
         self.prob_b_slider.grid(row=row_number, column=4)
 
 example_decision = Decision("Dialysis", "Not dialysis", [
