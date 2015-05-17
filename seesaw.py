@@ -27,7 +27,6 @@ class SeesawApp:
         Label(self.frame, text="Goal").grid(row=2, column=1)
         Label(self.frame, text="Importance").grid(row=2, column=2)
         Label(self.frame, text="Probability A").grid(row=2, column=3)
-        Label(self.frame, text="Probability B").grid(row=2, column=4)
 
         for group_number in range(0, self.number_of_groups):
             self.groups.append(GroupEntry(self.frame, group_number))
@@ -51,8 +50,7 @@ class SeesawApp:
             name = group.e1.get()
             importance = group.importance_slider.get()
             probability_a = group.prob_a_slider.get()
-            probability_b = group.prob_b_slider.get()
-            goal_list.append(Goal(name, importance, probability_a, probability_b))
+            goal_list.append(Goal(name, importance, probability_a))
 
         decision = Decision(treatment_a_name, treatment_b_name, goal_list)
         self.draw_decision(decision)
@@ -61,7 +59,7 @@ class SeesawApp:
     def draw_decision(self, decision):
         ''' There will be an issue if a smaller importance is plotted before
         a large importance with the same probability'''
-        x = [goal.prob_a - goal.prob_b for goal in decision.goals]
+        x = [goal.prob_a for goal in decision.goals]
         y = [goal.importance for goal in decision.goals]
 
         # create figure instance
@@ -85,10 +83,10 @@ class SeesawApp:
 
         # plot lines
         plt.vlines(0,0,1,lw=5)
-        plt.hlines(0,-2,2,lw=5)
+        plt.hlines(0,-1,1,lw=5)
 
         # set axis
-        plt.axis([-2,2,0,1])
+        plt.axis([-1,1,0,1])
 
         # pass figure to tk and render
         canvas = FigureCanvasTkAgg(p, master=self.frame)
@@ -104,11 +102,10 @@ class Decision:
         self.goals = goals
         
 class Goal:
-    def __init__(self, name, importance, probability_a, probability_b):
+    def __init__(self, name, importance, probability_a):
         self.name = name
         self.importance = importance
         self.prob_a = probability_a
-        self.prob_b = probability_b
 
 class GroupEntry:
     def __init__(self, master, group_number):
@@ -125,17 +122,14 @@ class GroupEntry:
         self.prob_a_slider = Scale(master, from_=-1, to=1, orient=HORIZONTAL, show=0, resolution=0.1)
         self.prob_a_slider.grid(row=row_number, column=3)
 
-        self.prob_b_slider = Scale(master, from_=-1, to=1, orient=HORIZONTAL, show=0, resolution=0.1)
-        self.prob_b_slider.grid(row=row_number, column=4)
-
 example_decision = Decision("Dialysis", "Not dialysis", [
-    Goal("Live as long as possible", 0.6, 0.5, 0),
-    Goal("Feel well day-to-day", 0.9, 0.3, 0.4),
-    Goal("Minimise symptoms", 0.8, 0.4, 0.4)])
+    Goal("Live as long as possible", 0.6, 0.5),
+    Goal("Feel well day-to-day", 0.9, 0.3),
+    Goal("Minimise symptoms", 0.8, 0.4)])
 
 root = Tk()
 
 seesaw_app = SeesawApp(root)
 
 root.mainloop()
-        
+
