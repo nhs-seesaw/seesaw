@@ -4,6 +4,7 @@ from Tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from itertools import repeat
 
 class SeesawApp:
 
@@ -27,13 +28,33 @@ class SeesawApp:
         
         b = Button(self.frame, text="Draw", command=self.button_callback)
         b.grid(row=self.number_of_groups+1, columnspan=4)
+
+        # pass figure to tk and render        
+        self.figure = plt.figure()
         
-        p = plt.figure()
+        # remove axis
+        plt.gca().get_xaxis().set_visible(False)
+        plt.gca().get_yaxis().set_visible(False)
+
+        # plot vertical line
+        plt.vlines(0,0,1,lw=5)
+
+        # set axis
+        plt.axis([-2,2,0,1])
+
+        self.barlist = plt.bar([0]*self.number_of_groups,
+                               [0]*self.number_of_groups,
+                               width = 0.2,
+                               align='center')
+        bar_col = ['b','g','r','c','m','y']
+        i=0
+        for cs in self.barlist:
+            cs.set_color(bar_col[i])
+            i=i+1
         
-        # pass figure to tk and render
-        canvas = FigureCanvasTkAgg(p, master=self.frame)
-        canvas.show()
-        canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
+        self.canvas = FigureCanvasTkAgg(self.figure, master=self.frame)
+        self.canvas.show()
+        self.canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
 
     def button_callback(self):
         treatment_a_name = "Treatment A"
@@ -55,33 +76,11 @@ class SeesawApp:
         x = [goal.prob_a - goal.prob_b for goal in decision.goals]
         y = [goal.importance for goal in decision.goals]
 
-        # create figure instance
-        p = plt.figure()
+        # change bar chart
+        for i in range(len(self.barlist)):
+            self.barlist[i].set_height(y[i])
         
-        # remove axis
-        plt.gca().get_xaxis().set_visible(False)
-        plt.gca().get_yaxis().set_visible(False)
-
-        # plot bar chart
-        barlist = plt.bar(x, y,width = 0.2,align='center')
-        bar_col = ['b','g','r','c','m','y']
-        i=0
-        for cs in barlist:
-            cs.set_color(bar_col[i])
-            i=i+1
-
-        # plot vertical line
-        plt.vlines(0,0,1,lw=5)
-
-        # set axis
-        plt.axis([-2,2,0,1])
-
-        # pass figure to tk and render
-        canvas = FigureCanvasTkAgg(p, master=self.frame)
-        canvas.show()
-        canvas.get_tk_widget().grid(row=self.number_of_groups+2, columnspan=4)
-        
-        goal_list = []
+        self.canvas.draw()
 
 class Decision:
     def __init__(self, treatment_a, treatment_b, goals):
