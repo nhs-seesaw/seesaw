@@ -88,6 +88,10 @@ class SeesawApp:
         # set axis
         plt.axis([-1,1,0,1])
 
+        # display treatment titles
+        plt.figtext(0.25,0.95,decision.treatment_a,horizontalalignment='center')
+        plt.figtext(0.75,0.95,decision.treatment_b,horizontalalignment='center')
+
         # pass figure to tk and render
         canvas = FigureCanvasTkAgg(p, master=self.frame)
         canvas.show()
