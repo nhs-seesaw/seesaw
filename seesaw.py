@@ -52,6 +52,8 @@ class SeesawApp:
 
 
     def draw_decision(self, decision):
+        ''' There will be an issue if a smaller importance is plotted before
+        a large importance with the same probability'''
         x = [goal.prob_a - goal.prob_b for goal in decision.goals]
         y = [goal.importance for goal in decision.goals]
 
@@ -59,7 +61,7 @@ class SeesawApp:
         p = plt.figure()
         
         # remove axis
-        plt.gca().get_xaxis().set_visible(False)
+        # plt.gca().get_xaxis().set_visible(False)
         plt.gca().get_yaxis().set_visible(False)
 
         # plot bar chart
@@ -70,8 +72,13 @@ class SeesawApp:
             cs.set_color(bar_col[i])
             i=i+1
 
-        # plot vertical line
+        # add bar names
+        labels = [goal.name for goal in decision.goals]
+        plt.xticks(x,labels)
+
+        # plot lines
         plt.vlines(0,0,1,lw=5)
+        plt.hlines(0,-2,2,lw=5)
 
         # set axis
         plt.axis([-2,2,0,1])
